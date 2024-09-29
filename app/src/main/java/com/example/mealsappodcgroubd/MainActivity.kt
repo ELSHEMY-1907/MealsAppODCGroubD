@@ -41,8 +41,9 @@ fun MealsAppCompose() {
         composable(Screen.MainScreen.route) { MainScreen(navController) }
         composable(
             "${Screen.MealDetailsScreen.route}/{Category}",
-            arguments = listOf(navArgument("mealName") { type = NavType.StringType })
-        ) { MealDetailsScreen()}
+            arguments = listOf(navArgument("Category") { type = NavType.StringType;nullable=true })
+        ) { backStackEntry ->
+            MealDetailsScreen()}
         }
 }
 

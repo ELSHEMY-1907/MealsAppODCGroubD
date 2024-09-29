@@ -15,6 +15,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.mealsappodcgroubd.Screen
 import com.google.gson.Gson
+import java.net.StandardSocketOptions
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
@@ -29,8 +32,11 @@ fun MainScreen(navController: NavController? = null, viewmodel: MainViewModel = 
             items(meals.categories){
                 MealItem(title = it.strCategory ?:"" , imageUrl = it.strCategoryThumb?: ""){
                     val gson = Gson()
-                    val categoryJson = gson.toJson(it)
-                    navController?.navigate("${Screen.MealDetailsScreen.route}/${it.strCategory}")
+                    val categoryDataJson = gson.toJson(it)
+                    // Encode the JSON to make it URL-safe
+                    val encodedCategoryData = URLEncoder.encode(categoryDataJson, StandardCharsets.UTF_8.toString())
+                    navController?.navigate("${Screen.MealDetailsScreen.route}/$encodedCategoryData")
+
                 }
             }
 
